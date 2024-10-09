@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "hw3/src"
+    ],
+    "java.project.referencedLibraries": [
+        "hw3/lib/gson-2.11.0.jar",
+        "hw3/lib/kafka-clients-3.6.2.jar"
+    ]
+}
