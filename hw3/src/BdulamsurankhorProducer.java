@@ -11,6 +11,8 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import com.google.gson.JsonObject;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -24,12 +26,27 @@ public class BdulamsurankhorProducer {
 
         String topicName = args[0];
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+        try {
+            props.load(new FileReader("producer.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+        // "bdulamsurankhor-1.novalocal:9092,bdulamsurankhor-2.novalocal:9092,bdulamsurankhor-3.novalocal:9092,bdulamsurankhor-4.novalocal:9092");
+        // props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+        // StringSerializer.class.getName());
+        // props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+        // StringSerializer.class.getName());
+
+        // props.put("sasl.jaas.config",
+        // "org.apache.kafka.common.security.plain.PlainLoginModule required " +
+        // "username=\"usercc\" " +
+        // "password=\"MyUserPasswd2024\";");
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        
+
         int messageCount = 1000000; // Set this to the number of messages you want to generate
         String lastMessageId = "";
 
@@ -41,7 +58,7 @@ public class BdulamsurankhorProducer {
 
                 ProducerRecord<String, String> record = new ProducerRecord<>(topicName, message.toString());
                 RecordMetadata metadata = producer.send(record).get();
-                
+
                 if (i == messageCount) {
                     lastMessageId = message.get("id").getAsString();
                 }
