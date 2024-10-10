@@ -6,6 +6,7 @@ package src;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -13,8 +14,6 @@ import java.util.concurrent.ExecutionException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,6 +37,7 @@ public class BdulamsurankhorConsumer {
         }
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Collections.singletonList(topicName));
         long sum = 0;
         int messageCount = 0;
 
@@ -50,15 +50,13 @@ public class BdulamsurankhorConsumer {
                     int randomNumber = jsonObject.get("number").getAsInt();
                     sum += randomNumber;
                     messageCount++;
-
-                    // Check if we've reached the last message
-                    if (jsonObject.get("id").getAsString().equals("1000000")) {
-                        System.out.println("Total sum of random numbers: " + sum);
-                        System.out.println("Total messages processed: " + messageCount);
-                        return;
-                    }
+                }
+                if (jsonObject.get("id").getAsString().equals("1000000")) {
+                    break;
                 }
             }
+            System.out.println("Total sum of random numbers: " + sum);
+            System.out.println("Total messages processed: " + messageCount);
         } finally {
             consumer.close();
         }
