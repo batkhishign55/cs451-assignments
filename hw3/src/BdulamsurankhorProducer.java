@@ -42,7 +42,7 @@ public class BdulamsurankhorProducer {
             for (int i = 1; i <= messageCount; i++) {
                 JsonObject message = new JsonObject();
                 Random random = new Random();
-                int randomInt = random.nextInt(1000000);
+                int randomInt = random.nextInt(1000);
                 long timestamp = System.currentTimeMillis();
 
                 message.addProperty("id", i);

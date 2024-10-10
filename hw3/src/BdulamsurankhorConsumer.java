@@ -40,9 +40,10 @@ public class BdulamsurankhorConsumer {
         consumer.subscribe(Collections.singletonList(topicName));
         long sum = 0;
         int messageCount = 0;
+        running=true;
 
         try {
-            while (true) {
+            while (running) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
 
                 for (ConsumerRecord<String, String> record : records) {
@@ -50,9 +51,9 @@ public class BdulamsurankhorConsumer {
                     int randomNumber = jsonObject.get("number").getAsInt();
                     sum += randomNumber;
                     messageCount++;
-                }
-                if (jsonObject.get("id").getAsString().equals("1000000")) {
-                    break;
+                    if (jsonObject.get("id").getAsString().equals("1000")) {
+                        running=false;
+                    }
                 }
             }
             System.out.println("Total sum of random numbers: " + sum);
