@@ -40,7 +40,7 @@ public class BdulamsurankhorConsumer {
         consumer.subscribe(Collections.singletonList(topicName));
         long sum = 0;
         int messageCount = 0;
-        running=true;
+        boolean running=true;
 
         try {
             while (running) {
@@ -51,7 +51,7 @@ public class BdulamsurankhorConsumer {
                     int randomNumber = jsonObject.get("number").getAsInt();
                     sum += randomNumber;
                     messageCount++;
-                    if (jsonObject.get("id").getAsString().equals("1000")) {
+                    if (jsonObject.get("id").getAsString().equals("1000000")) {
                         running=false;
                     }
                 }
