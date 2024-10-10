@@ -4,17 +4,17 @@
 
 package src;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.RecordMetadata;
-import org.apache.kafka.common.serialization.StringSerializer;
-import com.google.gson.JsonObject;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
+
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+
+import com.google.gson.JsonObject;
 
 public class BdulamsurankhorProducer {
 
@@ -30,31 +30,24 @@ public class BdulamsurankhorProducer {
         try {
             props.load(new FileReader("producer.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-        // "bdulamsurankhor-1.novalocal:9092,bdulamsurankhor-2.novalocal:9092,bdulamsurankhor-3.novalocal:9092,bdulamsurankhor-4.novalocal:9092");
-        // props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-        // StringSerializer.class.getName());
-        // props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-        // StringSerializer.class.getName());
-
-        // props.put("sasl.jaas.config",
-        // "org.apache.kafka.common.security.plain.PlainLoginModule required " +
-        // "username=\"usercc\" " +
-        // "password=\"MyUserPasswd2024\";");
+                       e.printStackTrace();
+                    }
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-        int messageCount = 1000000; // Set this to the number of messages you want to generate
+        int messageCount = 1000000;
         String lastMessageId = "";
 
         try {
             for (int i = 1; i <= messageCount; i++) {
                 JsonObject message = new JsonObject();
+                Random random = new Random();
+                int randomInt = random.nextInt(1000000);
+                long timestamp = System.currentTimeMillis();
+
                 message.addProperty("id", i);
-                message.addProperty("content", "Message #" + i);
+                message.addProperty("number", randomInt);
+                message.addProperty("timestamp", timestamp);
 
                 ProducerRecord<String, String> record = new ProducerRecord<>(topicName, message.toString());
                 RecordMetadata metadata = producer.send(record).get();
