@@ -51,6 +51,9 @@ public class BdulamsurankhorConsumer {
                     int randomNumber = jsonObject.get("number").getAsInt();
                     sum += randomNumber;
                     messageCount++;
+                    if (jsonObject.get("id").getAsInt()%10000==0) {
+                        System.out.println(jsonObject);
+                    }
                     if (jsonObject.get("id").getAsString().equals("1000000")) {
                         running=false;
                     }
