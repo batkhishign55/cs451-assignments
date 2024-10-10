@@ -1,3 +1,5 @@
+/opt/kafka/./bin/kafka-metadata-quorum.sh --bootstrap-server bdulamsurankhor-1.novalocal:9092 --command-config /opt/kafka/./config/admin.conf describe --status
+
 ./bin/kafka-topics.sh --bootstrap-server bdulamsurankhor-1.novalocal:9092 --command-config ./config/admin.conf --replication-factor 3 --create --topic Topic_Four --partitions 4 --config retention.ms=36000000
 ./bin/kafka-topics.sh --bootstrap-server bdulamsurankhor-1.novalocal:9092 --command-config ./config/admin.conf --replication-factor 2 --create --topic Topic_Three --partitions 3 --config retention.ms=36000000
 ./bin/kafka-topics.sh --bootstrap-server bdulamsurankhor-1.novalocal:9092 --command-config ./config/admin.conf --replication-factor 2 --create --topic Topic_One --partitions 1 --config retention.ms=36000000

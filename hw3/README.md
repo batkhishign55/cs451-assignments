@@ -39,11 +39,12 @@ I used java version 17 to write, compile and run the program, and used ant to co
 
 2. Start server app.
     ```bash
-    java -jar target/bdulamsurankhor-producer-1.0-SNAPSHOT.jar your_topic_name
+    java -jar target/bdulamsurankhor-producer-1.0-SNAPSHOT.jar Topic_One
     ``` 
+
 5. Start client app.
     ```bash
-    java src.BdulamsurankhorClient
+    keytool -import -alias kafka-broker -file cert.crt -keystore kafka.truststore.jks -storepass changeit
     ``` 
 
 ### Deployment on a remote machine (optional)
