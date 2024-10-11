@@ -5,60 +5,54 @@
 
 ### Used technology
 
-I used java version 17 to write, compile and run the program, and used ant to compile the source code.
+I used java version 17 to write, compile and run the program, and used maven to compile the source code.
 
 ### Folder structure
 
 ```bash
 .
 ├── README.md
-├── app.config
-├── bin
-│   ├── app.config
-│   ├── src
-│   │   ├── BdulamsurankhorClient.class
-│   │   ├── BdulamsurankhorHandler.class
-│   │   └── BdulamsurankhorServer.class
-│   └── words.txt
-├── build.xml
-├── deploy.sh
-├── src
-│   ├── BdulamsurankhorClient.java
-│   ├── BdulamsurankhorHandler.java
-│   └── BdulamsurankhorServer.java
-├── words.txt
-└── writeup.pdf
+├── cert.crt
+├── consumer.properties
+├── dependency-reduced-pom.xml
+├── doc # latex doc
+│   ├── images
+│   │   ├── image1.png
+│   │   ├── image2.png
+│   │   └── image3.png
+│   ├── main.aux
+│   ├── main.log
+│   ├── main.pdf
+│   └── main.tex
+├── pom.xml
+├── producer.properties
+├── src # source code
+│   ├── BdulamsurankhorConsumer.java
+│   └── BdulamsurankhorProducer.java
+└── target # compiled output
 ```
 
 ### Running the program
 
-1. Go to source directory and run ant command to generate all java bytecode for peer and testing in bin folder.
+1. Go to source directory and run maven command to generate all java bytecode for the application.
     ```bash
     mvn clean package
     ``` 
 
-2. Start server app.
-    ```bash
-    java -jar target/bdulamsurankhor-producer-1.0-SNAPSHOT.jar Topic_One
-    ``` 
-
-2. Start server app.
-    ```bash
-    java -jar target/bdulamsurankhor-consumer-1.0-SNAPSHOT.jar Topic_One
-    ``` 
-
-5. Start client app.
+2. Generate jks file from certificate.
     ```bash
     keytool -import -alias kafka-broker -file cert.crt -keystore kafka.truststore.jks -storepass changeit
     ``` 
 
-### Deployment on a remote machine (optional)
-
-1. Start a vm (assumption: debian)
-
-2. Create a deployement key add it to the repo
-
-3. Copy deploy.sh file and run it in the vm
+3. Start consumer app.
     ```bash
-    ./deploy.sh
-    ```
+    java -jar target/consumer.jar Topic_Three
+    ``` 
+
+4. Start producer app.
+    ```bash
+    java -jar target/producer.jar Topic_Three
+    ``` 
+
+### Screenshots for step 2
+I have included the screenshots from step 2 in the writeup at the end.
