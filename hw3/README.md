@@ -1,4 +1,4 @@
-### CS451 Introduction to Parallel and Distributed Computing Assignment 2
+### CS451 Introduction to Parallel and Distributed Computing Assignment 3
 **Illinois Institute of Technology**  
 
 * Batkhishig Dulamsurankhor (bdulamsurankhor@hawk.iit.edu) - A20543498
